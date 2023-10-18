@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Island+Moments&family=Montserrat:wght@300&family=Poppins&family=Roboto:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./CSS/styles.css">
+    <style>
+        .logo-font {
+            font-family: 'Island Moments', cursive;
+        }
+
+        .title-font {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .cancel-sign-font {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: smaller;
+        }
+
+        .button-font {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+    <style>
+        /* Style for the tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 50px;
+            background-color: #6f6d6d;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 100%;
+            transform: translate(10px, -50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header id="logo">
+        <h1 class="logo-font">Tasker</h1>
+    </header>
+    <main>
+        <!-- Search or Filter Task Options -->
+        <select name="options" id="options">
+            <option value="..." id="option-nav">...</option>
+            <option value="Search">Search</option>
+            <option value="Filter Tasks">Filter Tasks</option>
+        </select>
+        <div id="actionArea">
+            <!-- Task Creation and Edit section -->
+            <section id="createTaskSection">
+                <!-- Task Creation Form -->
+                <form id="createTaskForm" class="taskForm">
+                    <div class="titleDiv" id="titleDiv">
+                        <p class="title-font">Create New Task</p>
+                        <!-- <p id="cancel" class="cancel-sign-font">X</p> -->
+                    </div>
+                    <input id="taskNameField" class="taskNameField" type="text" name="TaskName" placeholder="Task name">
+                    <textarea name="Description" id="descriptionField" class="descriptionField" cols="30" rows="7" placeholder="Description.."></textarea>
+                    <div id="dateAndTimeBox">
+                        <div>
+                            <label for="dateField">Date</label>
+                            <input type="date" name="Date" id="dateField" class="dateField">
+                        </div>
+                        <div>
+                            <label for="timeField">Time</label>
+                            <input type="time" name="Time" id="timeField" class="timeField">
+                        </div>
+                    </div>
+                    <button id="createTaskButton" class="button-font" type="submit">Create Task</button>
+                </form>
+                <!-- End of Task Creation Form -->
+
+                <!-- Task Update Form -->
+                <form id="updateTaskForm" class="taskForm">
+                    <div id="titleDiv" class="titleDiv">
+                        <p class="title-font">Task Update</p>
+                        <p id="cancel" class="cancel-sign-font"><span class="tooltip">X<span class="tooltiptext">Cancel</span></span></p>
+                    </div>
+                    <input id="updateTaskNameField" class="taskNameField" name="TaskName" type="text" placeholder="Task name">
+                    <textarea id="updateDescriptionField" name="Description" class="descriptionField" cols="30" rows="7" placeholder="Description.."></textarea>
+                    <div id="dateAndTimeBox">
+                        <div>
+                            <label for="updateDateField">Date</label>
+                            <input type="date" name="Date" id="updateDateField" class="dateField">
+                        </div>
+                        <div>
+                            <label for="updateTimeField">Time</label>
+                            <input type="time" name="Time" id="updateTimeField" class="timeField">
+                        </div>
+                    </div>
+                    <button id="markCompletedButton" name="Completed" class="button-font">Mark as  not completed</button>
+                    <button id="submitUpdateButton" class="button-font" type="submit">Done</button>
+                </form>
+                <!-- End of Task Update Form -->
+            </section>
+            <!-- End of Task Creation and Edit section -->
+
+            <!-- Search and Filter section -->
+            <section id="searchAndFilterSection">
+                <!-- Search Task Form -->
+                <form id="searchForm" class="searchTaskForm">
+                    <div id="searchTitleDiv" class="searchTitleDiv">
+                        <p class="title-font">Search By Name</p>
+                        <!-- <p class="cancel-sign-font">X</p> -->
+                    </div>
+                    <input type="text" name="Name" class="taskNameField" id="searchNameField" placeholder="Task Name" autocomplete="off">
+                    <button type="submit" id="searchButton" class="button-font">Search</button>
+                </form>
+                <!-- End of Search Task Form -->
+
+                <!-- Filter Tasks Form -->
+                <form id="filterForm" class="searchTaskForm">
+                    <div id="filterDateDiv" class="searchTitleDiv">
+                        <p class="title-font">Filter Tasks By Date</p>
+                        <!-- <p class="cancel-sign-font">X</p> -->
+                    </div>
+                    <input type="date" name="TaskDate" class="taskNameField" id="filterDateField">
+                    <button type="submit" id="filterButton" class="button-font">Filter</button>
+                </form>
+                <!-- End of Filter Tasks Form -->
+            </section>
+            <!-- End of Search and Filter section -->
+        </div>
+
+        <!-- Overlay View Task Box -->
+        <div id="viewTaskDiv">
+            <p id="taskNameViewPara" class="button-font"></p>
+            <p id="markCompletedViewPara" class="button-font"></p>
+            <p id="descriptionViewPara" class="button-font"></p>
+            <div id="dateAndTimeViewDiv">
+                <p id="dateViewPara" class="button-font"></p>
+                <p id="timeViewPara" class="button-font"></p>
+            </div>
+        </div>
+        <!-- End of Overlay View Task Box -->
+
+        <!-- Task Display Section -->
+        <section id="taskDisplaySection">
+            <p class="title-font">Current Tasks:</p>
+            <div id="cardDisplayDiv"></div>
+            
+        </section>
+        <!-- End of Task Display Section -->
+
+    </main>
+
+    <!-- Including app.js script -->
+    <script type="module" src="./JS/app.js"></script>
+</body>
+</html>

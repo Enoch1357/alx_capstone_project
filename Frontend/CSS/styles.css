@@ -1,0 +1,393 @@
+
+body {
+    height: 300vh;
+    background-color: whitesmoke;
+    /* background-color: rgb(51, 53, 55); */
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#logo {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+#logo h1 {
+    font-size: 80px;
+    /* color: rgb(22, 211, 211); */
+    color: purple;
+}
+
+main #options {
+    border: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    font-size: 25px;
+    padding: 5px;
+    color: rgb(66, 65, 65);
+    width: 30px;
+}
+
+option {
+    font-size: large;
+}
+
+#option-nav {
+    display: none;
+}
+
+#actionArea {
+    display: flex;
+    justify-content: space-between;
+}
+
+#createTaskSection {
+    /* border: 1px solid red; */
+    height: 350px;
+    width: 900px;
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.taskForm {
+    border: 0;
+    border-radius: 8px;
+    height: 330px;
+    width: 300px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: rgba(57, 54, 54, 0.1);
+    box-shadow: 1px 5px 8px rgba(0, 0, 0, 0.3);
+}
+
+#createTaskForm {
+    display: flex;
+}
+
+#updateTaskForm {
+    display: none;
+}
+
+.titleDiv {
+    height: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#titleDiv p:first-child {
+    font-weight: bold;
+    font-size: large;
+}
+
+#dateAndTimeBox {
+    display: flex;
+}
+
+.taskNameField {
+    padding-left: 10px;
+    height: 35px;
+    border-radius: 8px;
+    border: 1px solid rgba(47, 128, 237, 1);
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.descriptionField {
+    margin-top: 5px;
+    padding-left: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(47, 128, 237, 1);
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+#createTaskButton {
+    background-color: rgba(47, 128, 237, 1);
+    color: white;
+    border-radius: 8px;
+    height: 48px;
+    border: 0;
+    margin-top: 20px;
+}
+
+#dateAndTimeBox{
+    margin-top: 3px;
+    padding-left: 1px;
+    gap: 70px;
+    display: flex;
+}
+
+.dateField {
+    padding-left: 10px;
+    height: 35px;
+    border-radius: 8px;
+    border: 1px solid rgba(47, 128, 237, 1);
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.timeField {
+    padding-left: 10px;
+    height: 35px;
+    border-radius: 8px;
+    border: 1px solid rgba(47, 128, 237, 1);
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+#markCompletedButton {
+    background-color: rgba(47, 128, 237, 0.2);
+    color: rgba(47, 128, 237, 1);
+    border-radius: 8px;
+    height: 48px;
+    border-color: rgb(119, 118, 118);
+    margin-top: 10px;
+}
+
+#submitUpdateButton {
+    background-color: rgba(47, 128, 237, 1);
+    color: white;
+    border-radius: 8px;
+    height: 48px;
+    border: 0;
+    margin-top: 10px;
+}
+
+
+
+#searchAndFilterSection {
+    height: 200px;
+}
+
+.searchTaskForm {
+    height: 175px;
+    border: 0;
+    border-radius: 8px;
+    width: 350px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(57, 54, 54, 0.1);
+    box-shadow: 1px 5px 8px rgba(0, 0, 0, 0.3);
+}
+
+.searchTitleDiv {
+    /* border: 1px solid black; */
+    width: 350px;
+    height: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#searchTitleDiv p:first-child {
+    font-weight: bold;
+    font-size: large;
+}
+
+#searchNameField {
+    width: 340px;
+}
+
+#searchForm #searchButton {
+    background-color: rgba(47, 128, 237, 1);
+    color: white;
+    width: 130px;
+    border-radius: 8px;
+    height: 48px;
+    border: 0;
+    margin-top: 15px;
+}
+
+#filterDateDiv p:first-child {
+    font-weight: bold;
+    font-size: large;
+}
+
+#filterDateField {
+    width: 340px;
+}
+
+#filterForm {
+    display: none;
+}
+
+#filterForm #filterButton {
+    background-color: rgba(47, 128, 237, 1);
+    color: white;
+    width: 130px;
+    border-radius: 8px;
+    height: 48px;
+    border: 0;
+    margin-top: 15px;
+}
+
+#taskDisplaySection {
+    padding: 10px;
+    /* border: 1px solid red; */
+    height: 1500px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    position: relative;
+}
+
+#cardDisplayDiv {
+    padding: 10px;
+    /* border: 1px solid black; */
+    height: 1490px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+#taskCardDiv {
+    border-radius: 16px;
+    height: 200px;
+    width: 400px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(57, 54, 54, 0.1);
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+#editAndViewTaskDiv {
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+#editDisplayButton {
+    border-color: rgb(119, 118, 118);
+    background-color: rgba(47, 128, 237, 1);
+    color: white;
+    border-radius: 30px;
+    height: 48px;
+    width: 100px;
+}
+
+#viewTaskDisplayButton {
+    border-color: rgb(119, 118, 118);
+    background-color: rgba(47, 128, 237, 1);
+    color: white;
+    border-radius: 30px;
+    height: 48px;
+    width: 150px;
+}
+
+#taskNameDisplay {
+    /* border: 1px solid black; */
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: large;
+}
+
+#deleteDiv {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#dateStampDiv {
+    /* border: 1px solid black; */
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    width: 150px;
+}
+
+#deleteButton {
+    border-color: rgb(119, 118, 118);
+    border-radius: 15px;
+    background-color: rgba(244, 80, 80, 0.96);
+    color: whitesmoke;
+    height: 40px;
+    width: 100px;
+}
+
+#markCompletedDisplayButton {
+    border-color: rgb(119, 118, 118);
+    border-radius: 8px;
+    background-color: rgba(47, 128, 237, 1);
+    color: white;
+    height: 40px;
+}
+
+
+
+#viewTaskDiv {
+    position: absolute;
+    border: 1px solid black;
+    height: auto;
+    width: 295px;
+    z-index: 1; /* To make it display over other elements without affecting their layout */
+    padding: 10px;
+    border-radius: 10px;
+    border-color: rgb(119, 118, 118);
+    box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.3);
+    background-color: rgb(78, 200, 84);
+    display: none;
+    flex-direction: column;
+}
+
+
+#taskNameViewPara {
+    margin: 0;
+    font-weight: bold;
+    font-size: large;
+    color: white;
+}
+
+#markCompletedViewPara {
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+#descriptionViewPara {
+    margin: 0;
+    font-size: small;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#dateAndTimeViewDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#dateAndTimeViewDiv p:first-child {
+    width: 150px;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+#dateAndTimeViewDiv #timeViewPara {
+    width: 100px;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
