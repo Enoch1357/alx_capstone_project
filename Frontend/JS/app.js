@@ -10,6 +10,73 @@ options.addEventListener('change', function () {
     options.value = '...';
 })
 
+
+const darkModeButton = document.getElementById("darkModeButton");
+const body = document.querySelector('body');
+const logo = document.getElementById('logo');
+const createTaskForm = document.getElementById('createTaskForm');
+const updateTaskForm = document.getElementById('updateTaskForm');
+const searchForm = document.getElementById('searchForm');
+const filterForm = document.getElementById('filterForm');
+const inputs = document.querySelectorAll('input');
+const textAreas = document.querySelectorAll('textarea');
+const cardDisplayDiv = document.getElementById("cardDisplayDiv");
+let isDark = false;
+
+darkModeButton.addEventListener('click', function() {
+
+    if (isDark) {
+        const taskCardDivs = cardDisplayDiv.querySelectorAll("#taskCardDiv"); 
+        body.style.backgroundColor = "whitesmoke";
+        body.style.color = "black";
+        logo.style.color = "purple";
+        options.style.color = "rgb(66, 65, 65)";
+        darkModeButton.style.backgroundColor = "rgba(6, 1, 18, 0.541)";
+        darkModeButton.style.color = "rgb(144, 177, 219)";
+        darkModeButton.textContent = "Dark Mode";
+        createTaskForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+        updateTaskForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+        searchForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+        filterForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+        taskCardDivs.forEach(taskCardDiv => {
+            taskCardDiv.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+        });
+        inputs.forEach(input => {
+            input.style.backgroundColor = "white";
+        });
+        textAreas.forEach(textArea => {
+        textArea.style.backgroundColor = "white";
+        });
+        isDark = false;
+
+    } else if (!isDark) {
+        const taskCardDivs = cardDisplayDiv.querySelectorAll("#taskCardDiv"); 
+        body.style.backgroundColor = "rgb(51, 53, 55)";
+        body.style.color = "whitesmoke";
+        logo.style.color = "rgb(22, 211, 211)";
+        options.style.color = "whitesmoke";
+        darkModeButton.style.backgroundColor = "rgba(47, 128, 237, 0.2)";
+        darkModeButton.style.color = "rgba(47, 128, 237, 1)";
+        darkModeButton.textContent = "Light Mode";
+        createTaskForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+        updateTaskForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+        searchForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+        filterForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+        taskCardDivs.forEach(taskCardDiv => {
+            taskCardDiv.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+        });
+        inputs.forEach(input => {
+            input.style.backgroundColor = "rgb(242, 200, 200)";
+        });
+        textAreas.forEach(textArea => {
+        textArea.style.backgroundColor = "rgb(242, 200, 200)";
+        });
+
+        isDark = true;
+    }
+})
+
+
 const cancel = document.getElementById('cancel');
 cancel.addEventListener('click', function () {
     // 'Close' action for task update form
@@ -22,7 +89,7 @@ cancel.addEventListener('click', function () {
 
 
 const createTaskButton = document.getElementById("createTaskButton");
-const tasks = JSON.parse(localStorage.getItem('tasks'));
+let tasks = JSON.parse(localStorage.getItem('tasks'));
 createTaskButton.addEventListener('click', function(event) {
     // Task Creation Form Button Actions
     event.preventDefault();
@@ -54,12 +121,15 @@ submitUpdateButton.addEventListener('click', function(event) {
     if (!isValid) {
         return;
     }
+
     const updateFormValues = getUpdateFormInput();
     tasks[currentPosition] = updateFormValues;
     tasks[currentPosition].completed = currentCompleteStatus;
     const stringifiedTasks = JSON.stringify(tasks);
     localStorage.setItem('tasks', stringifiedTasks);
     renderTask(tasks);
+
+    
 
     const updateTaskForm = document.getElementById('updateTaskForm');
     const createTaskForm = document.getElementById('createTaskForm');
@@ -72,10 +142,18 @@ const renderTask = (tasks) => {
     // Dynamic tasks render function
     renderDiv.innerHTML = "";
     
+    
     for (let itemPosition = 0; itemPosition < tasks.length; itemPosition++) {
         const task = tasks[itemPosition];
         const item = createTaskCard(task, itemPosition);
         renderDiv.appendChild(item)
+    }
+    
+    if (isDark) {
+        const taskCardDivs = cardDisplayDiv.querySelectorAll("#taskCardDiv");
+        taskCardDivs.forEach(taskCardDiv => {
+            taskCardDiv.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+        });
     }
     
 }
@@ -108,13 +186,14 @@ const createTaskCard = (task, itemPosition) => {
         const updateDateField = document.getElementById("updateDateField");
         const updateTimeField = document.getElementById("updateTimeField");
 
-        updateTaskNameField.value = tasks[itemPosition].taskName;
-        updateDescriptionField.value = tasks[itemPosition].description;
-        updateDateField.value = tasks[itemPosition].date;
-        updateTimeField.value = tasks[itemPosition].time;
+        updateTaskNameField.value = task.taskName;
+        updateDescriptionField.value = task.description;
+        updateDateField.value = task.date;
+        updateTimeField.value = task.time;
 
+        // currentTask  = task;
         currentPosition = itemPosition;
-        currentCompleteStatus = tasks[itemPosition].completed;
+        currentCompleteStatus = task.completed;
         
     })
 
@@ -190,7 +269,8 @@ const createTaskCard = (task, itemPosition) => {
 
     deleteButton.addEventListener('click', function() {
         // Dynamic Delete task button action
-        tasks.splice(itemPosition, 1);
+        const indexToDelete = tasks.indexOf(task);
+        tasks.splice(indexToDelete, 1);
         const stringifiedTasks = JSON.stringify(tasks);
         localStorage.setItem('tasks', stringifiedTasks);
         renderTask(tasks);
@@ -203,7 +283,7 @@ const createTaskCard = (task, itemPosition) => {
 
     markCompletedDisplayButton.addEventListener('click', function() {
         // Dynamic Mark task as Completed button action
-        tasks[itemPosition].completed = "Completed";
+        task.completed = "Completed";
         const stringifiedTasks = JSON.stringify(tasks);
         localStorage.setItem('tasks', stringifiedTasks);
         renderTask(tasks);
@@ -232,6 +312,8 @@ renderTask(tasks);
 
 
 const searchButton = document.getElementById("searchButton");
+let searchQuery = [];
+let nonSearchQuery = [];
 searchButton.addEventListener('click', function(event) {
     // Search form submit action
     event.preventDefault();
@@ -239,10 +321,25 @@ searchButton.addEventListener('click', function(event) {
     if (!isValid) {
         return;
     }
+    const searchNameField = document.getElementById("searchNameField");
+    const searchInput = searchNameField.value;
     resetSearch();
+
+    searchQuery = tasks.filter(task => task.taskName === searchInput);
+    nonSearchQuery = tasks.filter(task => task .taskName !== searchInput);
+    tasks = searchQuery;
+
+    renderTask(tasks);
+
+    for (const task of nonSearchQuery) {
+        tasks.push(task);
+    }
+     
 })
 
 const filterButton = document.getElementById("filterButton");
+let filterQuery = [];
+let nonFilterQuery = [];
 filterButton.addEventListener('click', function(event) {
     // Filter form submit button action
     event.preventDefault();
@@ -250,6 +347,19 @@ filterButton.addEventListener('click', function(event) {
     if (!isValid) {
         return;
     }
+
+    const filterDateField = document.getElementById("filterDateField");
+    const filterInput = filterDateField.value;
     resetFilter();
+
+    filterQuery = tasks.filter(task => task.date === filterInput);
+    nonFilterQuery = tasks.filter(task => task.date !== filterInput);
+    tasks = filterQuery;
+
+    renderTask(tasks);
+
+    for (const task of nonFilterQuery) {
+        tasks.push(task);
+    }
 })
 

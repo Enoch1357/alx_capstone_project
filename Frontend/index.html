@@ -57,8 +57,9 @@
     </style>
 </head>
 <body>
-    <header id="logo">
-        <h1 class="logo-font">Tasker</h1>
+    <header id="header">
+        <h1 id="logo" class="logo-font">Tasker</h1>
+        <button id="darkModeButton">Dark Mode</button>
     </header>
     <main>
         <!-- Search or Filter Task Options -->
@@ -158,7 +159,7 @@
 
         <!-- Task Display Section -->
         <section id="taskDisplaySection">
-            <p class="title-font">Current Tasks:</p>
+            <p id="currentTasks" class="title-font">Current Tasks:</p>
             <div id="cardDisplayDiv"></div>
             
         </section>
