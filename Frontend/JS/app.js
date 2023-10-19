@@ -50,11 +50,15 @@ darkModeButton.addEventListener('click', function() {
         isDark = false;
 
     } else if (!isDark) {
-        const taskCardDivs = cardDisplayDiv.querySelectorAll("#taskCardDiv"); 
+        const taskCardDivs = cardDisplayDiv.querySelectorAll("#taskCardDiv");
+        const selectOptions = options.querySelectorAll('option');
         body.style.backgroundColor = "rgb(51, 53, 55)";
         body.style.color = "whitesmoke";
         logo.style.color = "rgb(22, 211, 211)";
         options.style.color = "whitesmoke";
+        selectOptions.forEach(selectOption => {
+            selectOption.style.color = "black";
+        });
         darkModeButton.style.backgroundColor = "rgba(47, 128, 237, 0.2)";
         darkModeButton.style.color = "rgba(47, 128, 237, 1)";
         darkModeButton.textContent = "Light Mode";
