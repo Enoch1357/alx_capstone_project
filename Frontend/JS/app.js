@@ -21,7 +21,7 @@ const filterForm = document.getElementById('filterForm');
 const inputs = document.querySelectorAll('input');
 const textAreas = document.querySelectorAll('textarea');
 const cardDisplayDiv = document.getElementById("cardDisplayDiv");
-let isDark = false;
+let isDark = JSON.parse(localStorage.getItem('isDark'));
 
 darkModeButton.addEventListener('click', function() {
 
@@ -78,6 +78,9 @@ darkModeButton.addEventListener('click', function() {
 
         isDark = true;
     }
+
+    const stringifiedDarkValue = JSON.stringify(isDark);
+    localStorage.setItem('isDark', stringifiedDarkValue);
 })
 
 
@@ -309,10 +312,62 @@ const createTaskCard = (task, itemPosition) => {
 
 }
 
-// Render persisted tasks from previous session on page load
+
+// Render persisted tasks and persisted darkMode status from previous session on page load
+if (!isDark) {
+    const taskCardDivs = cardDisplayDiv.querySelectorAll("#taskCardDiv"); 
+    body.style.backgroundColor = "whitesmoke";
+    body.style.color = "black";
+    logo.style.color = "purple";
+    options.style.color = "rgb(66, 65, 65)";
+    darkModeButton.style.backgroundColor = "rgba(6, 1, 18, 0.541)";
+    darkModeButton.style.color = "rgb(144, 177, 219)";
+    darkModeButton.textContent = "Dark Mode";
+    createTaskForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+    updateTaskForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+    searchForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+    filterForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+    taskCardDivs.forEach(taskCardDiv => {
+        taskCardDiv.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+    });
+    inputs.forEach(input => {
+        input.style.backgroundColor = "white";
+    });
+    textAreas.forEach(textArea => {
+    textArea.style.backgroundColor = "white";
+    });
+    isDark = false;
+
+} else if (isDark) {
+    const taskCardDivs = cardDisplayDiv.querySelectorAll("#taskCardDiv");
+    const selectOptions = options.querySelectorAll('option');
+    body.style.backgroundColor = "rgb(51, 53, 55)";
+    body.style.color = "whitesmoke";
+    logo.style.color = "rgb(22, 211, 211)";
+    options.style.color = "whitesmoke";
+    selectOptions.forEach(selectOption => {
+        selectOption.style.color = "black";
+    });
+    darkModeButton.style.backgroundColor = "rgba(47, 128, 237, 0.2)";
+    darkModeButton.style.color = "rgba(47, 128, 237, 1)";
+    darkModeButton.textContent = "Light Mode";
+    createTaskForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+    updateTaskForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+    searchForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+    filterForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+    taskCardDivs.forEach(taskCardDiv => {
+        taskCardDiv.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+    });
+    inputs.forEach(input => {
+        input.style.backgroundColor = "rgb(242, 200, 200)";
+    });
+    textAreas.forEach(textArea => {
+    textArea.style.backgroundColor = "rgb(242, 200, 200)";
+    });
+
+    isDark = true;
+}
 renderTask(tasks);
-
-
 
 
 const searchButton = document.getElementById("searchButton");
