@@ -135,5 +135,42 @@ const showViewTaskDivRelativeToButton = (button) => {
     viewTaskDiv.style.left = `${left}px`;
 }
 
+
+const reminderNotification = (taskName) => {
+    let permission = Notification.permission;
+    
+    if(permission === "granted"){
+        showNotification();
+    } else if(permission === "default"){
+        requestAndShowPermission();
+    } else {
+        alert("Use normal alert");
+    }
+    
+    function requestAndShowPermission() {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+                showNotification();
+            }
+        });
+    }
+    
+    function showNotification() {
+        
+        let title = currentTaskName;
+        let body = "Message to be displayed";
+    
+        let notification = new Notification(title, { body });
+    
+        notification.onclick = () => {
+                notification.close();
+                // window.parent.focus();
+        }
+    
+    }
+
+}
+
+
 // Exporting functions into the global scope
-export { selectedOptionAction, validateForm, validateUpdateForm, resetTaskCreator, getCreateFormInput, getUpdateFormInput, showViewTaskDivRelativeToButton, validateSearch, resetSearch, validateFilter, resetFilter };
+export { selectedOptionAction, validateForm, validateUpdateForm, resetTaskCreator, getCreateFormInput, getUpdateFormInput, showViewTaskDivRelativeToButton, validateSearch, resetSearch, validateFilter, resetFilter, reminderNotification };

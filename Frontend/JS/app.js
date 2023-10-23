@@ -21,10 +21,12 @@ const filterForm = document.getElementById('filterForm');
 const inputs = document.querySelectorAll('input');
 const textAreas = document.querySelectorAll('textarea');
 const cardDisplayDiv = document.getElementById("cardDisplayDiv");
+const viewTaskDivs = document.querySelectorAll("#viewTaskDiv");
+
 let isDark = JSON.parse(localStorage.getItem('isDark'));
 
 darkModeButton.addEventListener('click', function() {
-
+    
     if (isDark) {
         const taskCardDivs = cardDisplayDiv.querySelectorAll("#taskCardDiv"); 
         body.style.backgroundColor = "whitesmoke";
@@ -38,15 +40,23 @@ darkModeButton.addEventListener('click', function() {
         updateTaskForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
         searchForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
         filterForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+        
         taskCardDivs.forEach(taskCardDiv => {
             taskCardDiv.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
         });
+        
         inputs.forEach(input => {
             input.style.backgroundColor = "white";
         });
+        
         textAreas.forEach(textArea => {
-        textArea.style.backgroundColor = "white";
+            textArea.style.backgroundColor = "white";
         });
+
+        viewTaskDivs.forEach(viewTaskDiv => {
+            viewTaskDiv.style.backgroundColor = "rgba(78, 200, 84, 0.952)";
+        });
+        
         isDark = false;
 
     } else if (!isDark) {
@@ -56,9 +66,11 @@ darkModeButton.addEventListener('click', function() {
         body.style.color = "whitesmoke";
         logo.style.color = "rgb(22, 211, 211)";
         options.style.color = "whitesmoke";
+        
         selectOptions.forEach(selectOption => {
             selectOption.style.color = "black";
         });
+        
         darkModeButton.style.backgroundColor = "rgba(47, 128, 237, 0.2)";
         darkModeButton.style.color = "rgba(47, 128, 237, 1)";
         darkModeButton.textContent = "Light Mode";
@@ -66,14 +78,21 @@ darkModeButton.addEventListener('click', function() {
         updateTaskForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
         searchForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
         filterForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+        
         taskCardDivs.forEach(taskCardDiv => {
             taskCardDiv.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
         });
+        
         inputs.forEach(input => {
-            input.style.backgroundColor = "rgb(242, 200, 200)";
+            input.style.backgroundColor = "rgba(198, 226, 252, 0.895)";
         });
+        
         textAreas.forEach(textArea => {
-        textArea.style.backgroundColor = "rgb(242, 200, 200)";
+            textArea.style.backgroundColor = "rgba(198, 226, 252, 0.895)";
+        });
+
+        viewTaskDivs.forEach(viewTaskDiv => {
+            viewTaskDiv.style.backgroundColor = "rgba(87, 113, 137, 0.954)";
         });
 
         isDark = true;
@@ -113,11 +132,49 @@ createTaskButton.addEventListener('click', function(event) {
     renderTask(tasks);
 })
 
-const markCompletedButton = document.getElementById('markCompletedButton');
-markCompletedButton.addEventListener('click', function(event) {
-    // Update task form mark as not completed button
+const setReminderButton = document.getElementById('setReminderButton');
+setReminderButton.addEventListener('click', function(event) {
+    // Set reminder for important tasks
     event.preventDefault();
-    currentCompleteStatus = "Not completed";
+
+    const isValid = validateUpdateForm();
+    if (!isValid) {
+        return;
+    }
+   
+    const [year, rawMonth, rawDay] = currentTaskDate.split("-");
+    const month = rawMonth.trimStart();
+    const day = rawDay.trimStart();
+   
+    const [rawHours, rawMinutes] = currentTaskTime.split(":");
+    const hours = rawHours.trimStart();
+    const minutes = rawMinutes.trimStart();
+   
+    const alertTime = new Date();
+    alertTime.setFullYear(parseInt(year));
+    alertTime.setMonth(parseInt(month) - 1);
+    alertTime.setDate(parseInt(day));
+    alertTime.setHours(parseInt(hours));
+    alertTime.setMinutes(parseInt(minutes));
+   
+    const date = new Date();
+   
+    const timeDifference = alertTime - date;
+    console.log(timeDifference);
+   
+    if (timeDifference > 0) {
+        alert("Reminder set successfuly!");
+        setTimeout(function() {
+            alert(`You have a scheduled reminder at this time for a task called ${currentTaskName}`);
+        }, timeDifference);
+
+    } else {
+        alert("The specified time has already passed");
+        return;
+    }
+   
+   // 'Reminder!' as the notification header
+   // 'You have a scheduled reminder at this time for a task called `taskName`.
 })
 
 const submitUpdateButton = document.getElementById("submitUpdateButton");
@@ -131,7 +188,6 @@ submitUpdateButton.addEventListener('click', function(event) {
 
     const updateFormValues = getUpdateFormInput();
     tasks[currentPosition] = updateFormValues;
-    tasks[currentPosition].completed = currentCompleteStatus;
     const stringifiedTasks = JSON.stringify(tasks);
     localStorage.setItem('tasks', stringifiedTasks);
     renderTask(tasks);
@@ -166,7 +222,10 @@ const renderTask = (tasks) => {
 }
 
 let currentPosition = 0;
-let currentCompleteStatus = "";
+let currentTaskName = "";
+let currentTaskDate = "";
+let currentTaskTime = "";
+let isCompleted = false;
 
 const createTaskCard = (task, itemPosition) => {
     // Created tasks dynamic card creation
@@ -200,7 +259,9 @@ const createTaskCard = (task, itemPosition) => {
 
         // currentTask  = task;
         currentPosition = itemPosition;
-        currentCompleteStatus = task.completed;
+        currentTaskName = task.taskName;
+        currentTaskDate = task.date;
+        currentTaskTime = task.time;
         
     })
 
@@ -286,11 +347,19 @@ const createTaskCard = (task, itemPosition) => {
     const markCompletedDisplayButton = document.createElement('button');
     markCompletedDisplayButton.setAttribute('id', 'markCompletedDisplayButton');
     markCompletedDisplayButton.setAttribute('class', 'button-font');
-    markCompletedDisplayButton.textContent = "Mark as completed";
+    markCompletedDisplayButton.textContent = "Toggle Mark as Completed";
 
     markCompletedDisplayButton.addEventListener('click', function() {
         // Dynamic Mark task as Completed button action
-        task.completed = "Completed";
+        if (isCompleted) {
+            task.completed = "Not completed";
+            isCompleted = false;
+
+        } else if (!isCompleted) {
+            task.completed = "Completed";
+            isCompleted = true; 
+        }
+        
         const stringifiedTasks = JSON.stringify(tasks);
         localStorage.setItem('tasks', stringifiedTasks);
         renderTask(tasks);
@@ -327,15 +396,23 @@ if (!isDark) {
     updateTaskForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
     searchForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
     filterForm.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
+    
     taskCardDivs.forEach(taskCardDiv => {
         taskCardDiv.style.backgroundColor = "rgba(57, 54, 54, 0.1)";
     });
+    
     inputs.forEach(input => {
         input.style.backgroundColor = "white";
     });
+    
     textAreas.forEach(textArea => {
-    textArea.style.backgroundColor = "white";
+        textArea.style.backgroundColor = "white";
     });
+
+    viewTaskDivs.forEach(viewTaskDiv => {
+        viewTaskDiv.style.backgroundColor = "rgba(78, 200, 84, 0.952)";
+    });
+    
     isDark = false;
 
 } else if (isDark) {
@@ -345,9 +422,11 @@ if (!isDark) {
     body.style.color = "whitesmoke";
     logo.style.color = "rgb(22, 211, 211)";
     options.style.color = "whitesmoke";
+    
     selectOptions.forEach(selectOption => {
         selectOption.style.color = "black";
     });
+    
     darkModeButton.style.backgroundColor = "rgba(47, 128, 237, 0.2)";
     darkModeButton.style.color = "rgba(47, 128, 237, 1)";
     darkModeButton.textContent = "Light Mode";
@@ -355,18 +434,27 @@ if (!isDark) {
     updateTaskForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
     searchForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
     filterForm.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
+    viewTaskDiv.backgroundColor = "rgba(87, 113, 137, 0.954)";
+    
     taskCardDivs.forEach(taskCardDiv => {
         taskCardDiv.style.backgroundColor = "rgba(70, 68, 68, 0.838)";
     });
+    
     inputs.forEach(input => {
-        input.style.backgroundColor = "rgb(242, 200, 200)";
+        input.style.backgroundColor = "rgba(198, 226, 252, 0.895)";
     });
+    
     textAreas.forEach(textArea => {
-    textArea.style.backgroundColor = "rgb(242, 200, 200)";
+        textArea.style.backgroundColor = "rgba(198, 226, 252, 0.895)";
+    });
+
+    viewTaskDivs.forEach(viewTaskDiv => {
+        viewTaskDiv.style.backgroundColor = "rgba(87, 113, 137, 0.954)";
     });
 
     isDark = true;
 }
+
 renderTask(tasks);
 
 
