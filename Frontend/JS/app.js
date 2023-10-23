@@ -188,6 +188,7 @@ submitUpdateButton.addEventListener('click', function(event) {
 
     const updateFormValues = getUpdateFormInput();
     tasks[currentPosition] = updateFormValues;
+    tasks[currentPosition].completed = currentCompleteStatus;
     const stringifiedTasks = JSON.stringify(tasks);
     localStorage.setItem('tasks', stringifiedTasks);
     renderTask(tasks);
@@ -225,6 +226,7 @@ let currentPosition = 0;
 let currentTaskName = "";
 let currentTaskDate = "";
 let currentTaskTime = "";
+let currentCompleteStatus = "";
 let isCompleted = false;
 
 const createTaskCard = (task, itemPosition) => {
@@ -262,6 +264,7 @@ const createTaskCard = (task, itemPosition) => {
         currentTaskName = task.taskName;
         currentTaskDate = task.date;
         currentTaskTime = task.time;
+        currentCompleteStatus = task.completed;
         
     })
 

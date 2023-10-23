@@ -15,21 +15,20 @@ button:hover {
     align-items: center;
     height: 50px;
     padding: 10px;
+    gap: 10px;
 }
 
 #logo {
-    width: 820px;
     font-size: 80px;
     color: purple;
     display: flex;
-    justify-content: end;
 }
 
 #darkModeButton {
     background-color: rgba(6, 1, 18, 0.541);
     color: rgb(144, 177, 219);
     border-radius: 8px;
-    height: 30px;
+    height: 35px;
     border-color: rgb(119, 118, 118);
     margin-top: 10px;
 }

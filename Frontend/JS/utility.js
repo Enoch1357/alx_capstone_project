@@ -156,6 +156,9 @@ const reminderNotification = (taskName) => {
     }
     
     function showNotification() {
+        // if(document.visibilityState === "visible") {
+        //     return;
+        // }
         
         let title = currentTaskName;
         let body = "Message to be displayed";

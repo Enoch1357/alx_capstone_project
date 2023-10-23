@@ -13,8 +13,10 @@ Front End
 -	JavaScript for Interactivity
 
 Back End
--	Python with Flask for managing HTTP requests to and responses from the server
--	MySQL and MySQLAlchemy for Database Management
+- Data Storage: implementing storage for task data by persisting them in the local  storage.
+<!-- -	Python with Flask for managing HTTP requests to and responses from the server
+-	MySQL and MySQLAlchemy for Database Management -->
+
 
 ![Creating Task](<./Prototype/Creating task.png>)
 ![Initial Task Display](<./Prototype/Initial task display.png>)
@@ -30,4 +32,4 @@ This version of the application uses local storage and hence is only feasible fo
 _CONTACT INFORMATION_
 Developer: Enoch Mensah
 Github username: Enoch1357
-<!-- LinkedIn profile: -->
+LinkedIn profile: https://www.linkedin.com/in/enoch-mensah-25a3b1268.
