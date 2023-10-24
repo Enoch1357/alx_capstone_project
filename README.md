@@ -18,15 +18,16 @@ Back End
 -	MySQL and MySQLAlchemy for Database Management -->
 
 
-![Creating Task](<./Prototype/Creating task.png>)
-![Initial Task Display](<./Prototype/Initial task display.png>)
-![Pop-up Task Display](<./Prototype/Pop-up task display.png>)
-![Editing Task](<./Prototype/Editing task.png>)
+![Creating Task](<./Prototype/Creating task.png>)  
 
+![Initial Task Display](<./Prototype/Initial task display.png>)  
+
+![Pop-up Task Display](<./Prototype/Pop-up task display.png>)  
+
+![Editing Task](<./Prototype/Editing task.png>)
 
 _ROADMAP TO FUTURE ENHANCEMENTS_
 This version of the application uses local storage and hence is only feasible for small-scale use. In the future however, I seek to incorporate the presence of a database to store data, and hopfully improve it as such to be feasible for large-scale or organizational use as well.
-
 
 
 _CONTACT INFORMATION_
