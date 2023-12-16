@@ -55,6 +55,29 @@
             opacity: 1;
         }
     </style>
+    <style>
+        /* CSS for the modal */
+        .delete-modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(88, 87, 87, 0.7);
+        }
+    
+        .modal-content {
+          background-color: #fff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <header id="header">
@@ -166,6 +189,14 @@
         <!-- End of Task Display Section -->
 
     </main>
+
+    <div class="delete-modal">
+        <div class="modal-content">
+            <p style="font-size: large; color: black;" class="modal-message"></p>
+            <button id="cancel-del" class="button-font">Cancel</button>
+            <button id="del-del" class="button-font">Delete</button>
+        </div>
+    </div>
 
     <!-- Including app.js script -->
     <script type="module" src="./JS/app.js"></script>

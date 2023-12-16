@@ -22,6 +22,10 @@ const inputs = document.querySelectorAll('input');
 const textAreas = document.querySelectorAll('textarea');
 const cardDisplayDiv = document.getElementById("cardDisplayDiv");
 const viewTaskDivs = document.querySelectorAll("#viewTaskDiv");
+const delModal = document.querySelector(".delete-modal");
+const delMessage = document.querySelector(".modal-message");
+const cancelDel = document.getElementById("cancel-del");
+const delDel = document.getElementById("del-del");
 
 let isDark = JSON.parse(localStorage.getItem('isDark'));
 
@@ -211,6 +215,7 @@ const renderTask = (tasks) => {
         const task = tasks[itemPosition];
         const item = createTaskCard(task, itemPosition);
         renderDiv.appendChild(item)
+        item.scrollIntoView({behavior:"smooth"});
     }
     
     if (isDark) {
@@ -265,6 +270,8 @@ const createTaskCard = (task, itemPosition) => {
         currentTaskDate = task.date;
         currentTaskTime = task.time;
         currentCompleteStatus = task.completed;
+
+        updateTaskForm.scrollIntoView({behavior:"smooth"});
         
     })
 
@@ -339,12 +346,10 @@ const createTaskCard = (task, itemPosition) => {
     deleteButton.textContent = "Delete";
 
     deleteButton.addEventListener('click', function() {
-        // Dynamic Delete task button action
-        const indexToDelete = tasks.indexOf(task);
-        tasks.splice(indexToDelete, 1);
-        const stringifiedTasks = JSON.stringify(tasks);
-        localStorage.setItem('tasks', stringifiedTasks);
-        renderTask(tasks);
+        // Dynamic Delete task button
+        currentPosition = itemPosition;
+        delMessage.textContent = `Are you sure you want to delete ${task.taskName}?`;
+        delModal.style.display = "block";
     })
 
     const markCompletedDisplayButton = document.createElement('button');
@@ -458,8 +463,23 @@ if (!isDark) {
     isDark = true;
 }
 
+if (tasks === null) {
+    tasks = [];
+}
 renderTask(tasks);
 
+cancelDel.addEventListener('click', function() {
+    delModal.style.display = "none";
+})
+
+delDel.addEventListener('click', function() {
+    // const indexToDelete = tasks.indexOf(task);
+    tasks.splice(currentPosition, 1);
+    const stringifiedTasks = JSON.stringify(tasks);
+    localStorage.setItem('tasks', stringifiedTasks);
+    delModal.style.display = "none";
+    renderTask(tasks);
+})
 
 const searchButton = document.getElementById("searchButton");
 let searchQuery = [];

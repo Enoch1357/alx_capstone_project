@@ -1,6 +1,6 @@
 
 body {
-    height: 300vh;
+    height: 100%;
     background-color: whitesmoke;
 }
 
@@ -43,6 +43,10 @@ main #options {
     padding: 5px;
     color: rgb(66, 65, 65);
     width: 30px;
+}
+
+#options:hover {
+    cursor: pointer;
 }
 
 option {
@@ -250,7 +254,7 @@ option {
 #taskDisplaySection {
     padding: 10px;
     /* border: 1px solid red; */
-    height: 1500px;
+    height: auto;
     display: flex;
     gap: 5px;
     flex-direction: column;
@@ -260,7 +264,7 @@ option {
 #cardDisplayDiv {
     padding: 10px;
     /* border: 1px solid black; */
-    height: 1490px;
+    height: auto;
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
@@ -402,4 +406,21 @@ option {
     width: 100px;
     margin-bottom: 0;
     margin-top: 10px;
+}
+
+#cancel-del, #del-del {
+    width: 180px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid black;
+    color: white;
+    font-size: medium;
+}
+
+#cancel-del {
+    background-color: rgba(47, 128, 237, 1);
+}
+
+#del-del {
+    background-color: rgba(189, 48, 48, 0.952);
 }
